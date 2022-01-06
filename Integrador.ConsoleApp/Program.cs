@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Integrador.ConsoleApp
 {
@@ -10,12 +11,15 @@ namespace Integrador.ConsoleApp
             var repositorio = new RepositorioBoletos();
             var boletos = repositorio.RecuperarTodos();
             
-            // TODO : Gerar arquivo conforme CNAB
-            foreach (var boleto in boletos)
+
+            string nomeArquivo = "C:\\Users\\junio\\Documents\\Remessa\\arq01.txt";
+
+            using (var fileStream = new FileStream(nomeArquivo, FileMode.Create))
             {
-                Console.WriteLine($"{boleto.NossoNumero}|{boleto.Valor}|{boleto.Beneficiario.Nome}");
-                
+                var arquivoRemessa = new ArquivoRemessa(fileStream);
+                arquivoRemessa.Gerar(boletos);
             }
+            
         }
     }
 }

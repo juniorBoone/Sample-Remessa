@@ -71,5 +71,33 @@ namespace Integrador.ConsoleApp.Extensions
                 return builder.ToString();
             }
         }
+
+        public static string RecuperarCodigoDoMes(in int month)
+        {
+            return month switch
+            {
+                1 => "1",
+                2 => "2",
+                3 => "3",
+                4 => "4",
+                5 => "5",
+                6 => "6",
+                7 => "7",
+                8 => "8",
+                9 => "9",
+                10 => "0",
+                11 => "N",
+                12 => "D",
+                _ => ""
+            };
+        }
+
+        public static string FormatarTexto(this string valor, int tamanho, char padChar = ' ')
+        {
+            if (valor.Length > tamanho)
+                valor = valor[..tamanho];
+
+            return valor.RemoveAccentsAndSpecialChars().PadLeft(tamanho, padChar);
+        }
     }
 }

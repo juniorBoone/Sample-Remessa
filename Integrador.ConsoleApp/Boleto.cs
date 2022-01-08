@@ -5,14 +5,14 @@ namespace Integrador.ConsoleApp
 {
     public sealed class Boleto
     {
-        public Boleto(string nossoNumero, string numeroDocumento, Cedente cedente, Beneficiario beneficiario, 
+        public Boleto(string nossoNumero, string numeroDocumento, Beneficiario beneficiario, Pagador pagador, 
             string localDePagamento, string[] instrucoes, DateTime vencimento, decimal valor, 
             DescontoAntecipacao desconto, IJuros juros)
         {
             NossoNumero = nossoNumero;
             NumeroDocumento = numeroDocumento;
-            Cedente = cedente;
             Beneficiario = beneficiario;
+            Pagador = pagador;
             LocalDePagamento = localDePagamento;
             Instrucoes = instrucoes;
             Vencimento = vencimento;
@@ -25,8 +25,8 @@ namespace Integrador.ConsoleApp
 
         public string NossoNumero { get; }
         public string NumeroDocumento { get;}
-        public Cedente Cedente { get; }
         public Beneficiario Beneficiario { get; }
+        public Pagador Pagador { get; }
         public string LocalDePagamento { get; }
         public string[] Instrucoes { get; }
         public DateTime Vencimento { get;}

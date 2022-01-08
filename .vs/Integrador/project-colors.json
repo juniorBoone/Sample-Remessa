@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
+    },
+    "18d6ede6-8f30-4d54-9b2f-c09602d467a3": {
+      "ProjectGuid": "18d6ede6-8f30-4d54-9b2f-c09602d467a3",
+      "DisplayName": "Integrador.ConsoleApp",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

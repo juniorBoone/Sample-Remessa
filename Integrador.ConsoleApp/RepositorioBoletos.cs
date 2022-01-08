@@ -21,8 +21,8 @@ namespace Integrador.ConsoleApp
                 yield return new Boleto(
                     GerarNumero(6),
                     GerarNumero(10),
-                    new Cedente("987", "8276", "221121"),
-                    new Beneficiario(pessoa.nome, pessoa.nome, Cpf.Recuperar(pessoa.cpf),
+                    new Beneficiario("987", "8276", "221121", "02884435000171"),
+                    new Pagador(pessoa.nome, pessoa.nome, Cpf.Recuperar(pessoa.cpf),
                         new EnderecoCompleto(pessoa.endereco, pessoa.numero.ToString(), "", pessoa.bairro,
                             pessoa.cidade, pessoa.cep, pessoa.estado, "Brasil")),
                     "",
@@ -33,6 +33,9 @@ namespace Integrador.ConsoleApp
                     GerarJuros());
             }
         }
+
+        public Beneficiario RecuperarBeneficiario()
+            => new Beneficiario("987", "8276", "21121", "51450629000174");
 
         private string GerarNumero(int tamanho, int maximo = 999999)
         {

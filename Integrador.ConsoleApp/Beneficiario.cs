@@ -1,32 +1,29 @@
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using CSharpFunctionalExtensions;
 
 namespace Integrador.ConsoleApp
 {
     public sealed class Beneficiario : ValueObject
     {
-        private Beneficiario() { }
-        [JsonConstructor]
-        public Beneficiario(string nome, string nomeSocial, DocumentoBase documento, EnderecoCompleto endereco)
+        public Beneficiario(string banco, string agencia, string codigo, string cnpj)
         {
-            Nome = nome;
-            NomeSocial = nomeSocial;
-            Endereco = endereco;
-            Documento = documento;
+            Banco = banco;
+            Agencia = agencia;
+            Codigo = codigo;
+            CNPJ = cnpj; 
         }
 
-        public string Nome { get; }
-        public string NomeSocial { get; }
-        public DocumentoBase Documento { get;  }
-        public EnderecoCompleto Endereco { get; }
+        public string Banco { get; }
+        public string Agencia { get; }
+        public string Codigo { get; }
+        public string CNPJ { get; }
+
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Nome;
-            yield return NomeSocial;
-            yield return Documento;
-            yield return Endereco;
+            yield return Banco;
+            yield return Agencia;
+            yield return Codigo;
         }
     }
 }

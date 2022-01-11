@@ -21,7 +21,6 @@ C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.C
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\Integrador.ConsoleApp.AssemblyInfoInputs.cache
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\Integrador.ConsoleApp.AssemblyInfo.cs
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\Integrador.ConsoleApp.csproj.CoreCompileInputs.cache
-C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\Integrador.ConsoleApp.csproj.AssemblyReference.cache
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\bin\Debug\net6.0\Integrador.ConsoleApp.exe
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\bin\Debug\net6.0\pessoas.json
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\bin\Debug\net6.0\Integrador.ConsoleApp.deps.json
@@ -36,3 +35,4 @@ C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.C
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\ref\Integrador.ConsoleApp.dll
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\Integrador.ConsoleApp.pdb
 C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\Integrador.ConsoleApp.genruntimeconfig.cache
+C:\Users\junio\Documents\Visual Studio 2022\Projetos\Sample-Remessa\Integrador.ConsoleApp\obj\Debug\net6.0\Integrador.ConsoleApp.csproj.AssemblyReference.cache

@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -70,6 +71,17 @@ namespace Integrador.ConsoleApp.Extensions
                     builder.Append(data[i].ToString("X2"));
                 return builder.ToString();
             }
+        }
+
+        public static string RecuperarDiretorioResouce()
+        {
+            string path = Directory.GetCurrentDirectory();
+            path = path.Remove(path.LastIndexOf("\\"));
+            path = path.Remove(path.LastIndexOf("\\"));
+            path = path.Remove(path.LastIndexOf("\\") + 1);
+            path += @"resource\";
+
+            return path;
         }
 
         public static string RecuperarCodigoDoMes(in int month)

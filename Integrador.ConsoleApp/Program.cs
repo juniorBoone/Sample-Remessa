@@ -1,10 +1,9 @@
 ﻿using System;
-using System.IO;
 
 namespace Integrador.ConsoleApp
 {
     class Program
-    { 
+    {
         static void Main(string[] args)
         {
             Console.WriteLine("Gerador CNAB banco Eximia");

@@ -25,12 +25,21 @@ namespace Integrador.ConsoleApp
             Boletos = boletos;
             Beneficiario = beneficiario ?? throw new ArgumentException("Beneficiário não informado");
 
-            NomeArquivo = Beneficiario.Codigo.FormatarTexto(5, '0');
+            NomeArquivo = StringExtensions.RecuperarDiretorioResouce();
+
+            if (!Directory.Exists(NomeArquivo))
+            {
+                Directory.CreateDirectory(NomeArquivo);
+            }
+
+            NomeArquivo += Beneficiario.Codigo.FormatarTexto(5, '0');
             NomeArquivo += StringExtensions.RecuperarCodigoDoMes(DateTime.Now.Month);
             NomeArquivo += DateTime.Now.Day + ".CRM";
 
             if (File.Exists(NomeArquivo))
+            {
                 File.Delete(NomeArquivo);
+            }
             Arquivo = File.CreateText(NomeArquivo);
 
             string strline = GerarHeader();

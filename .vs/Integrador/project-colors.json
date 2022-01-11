@@ -10,7 +10,12 @@
       "ProjectGuid": "18d6ede6-8f30-4d54-9b2f-c09602d467a3",
       "DisplayName": "Integrador.ConsoleApp",
       "ColorIndex": 0
+    },
+    "5ee28c4b-50be-4e71-ad46-2023dd0646eb": {
+      "ProjectGuid": "5ee28c4b-50be-4e71-ad46-2023dd0646eb",
+      "DisplayName": "Integrador.Tests",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

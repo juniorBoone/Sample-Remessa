@@ -7,11 +7,12 @@ namespace Integrador.ConsoleApp
         static void Main(string[] args)
         {
             Console.WriteLine("Gerador CNAB banco Eximia");
-            var repositorio = new RepositorioBoletos();
-            var boletos = repositorio.RecuperarTodos();
-            var beneficiario = repositorio.RecuperarBeneficiario();
 
-            new ArquivoRemessa().Gerar(beneficiario, boletos);
+            string DiretorioArquivo = Extensions.StringExtensions.RecuperarDiretorioResouce();
+
+            new ArquivoRemessa().GerarArquivoRemessa(DiretorioArquivo);
+
+            Console.WriteLine("Fim Geração de Arquivo Remessa CNAB banco Eximia");
         }
     }
 }

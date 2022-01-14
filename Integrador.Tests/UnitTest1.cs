@@ -1,3 +1,4 @@
+using Integrador.ConsoleApp;
 using Integrador.ConsoleApp.Extensions;
 using Xunit;
 
@@ -36,13 +37,49 @@ namespace Integrador.Tests
                 case 11:
                     Assert.Equal("N", codigoMes);
                     break;
-                case 12: // Erro Esperado
-                    Assert.Equal("12", codigoMes);
+                case 12: 
+                    Assert.Equal("D", codigoMes);
                     break;
                 default:
                     break;
             }
 
         }
+
+        [Fact]
+        public void DadoBeneficiario_DevoRetornarCNPJCorreto()
+        {
+            RepositorioBoletos repositorio = new();
+            Beneficiario beneficiario = repositorio.RecuperarBeneficiario();
+
+            Assert.Equal("51450629000174", beneficiario.CNPJ);
+        }
+
+        [Fact]
+        public void DadoHeaderRemessa_DevoRetornarComprimentoCorreto()
+        {
+            RepositorioBoletos repositorio = new();
+            ArquivoRemessa arquivoRemessa = new();
+
+            Beneficiario beneficiario = repositorio.RecuperarBeneficiario();
+
+            string header = arquivoRemessa.GerarHeader(beneficiario);
+
+            Assert.Equal(400, header.Length);
+        }
+
+        [Fact]
+        public void DadoTrailerRemessa_DevoRetornarComprimentoCorreto()
+        {
+            RepositorioBoletos repositorio = new();
+            ArquivoRemessa arquivoRemessa = new();
+
+            Beneficiario beneficiario = repositorio.RecuperarBeneficiario();
+
+            string header = arquivoRemessa.GerarTrailer(beneficiario);
+
+            Assert.Equal(400, header.Length);
+        }
+
     }
 }

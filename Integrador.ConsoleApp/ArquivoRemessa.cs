@@ -10,29 +10,30 @@ namespace Integrador.ConsoleApp
 {
     public class ArquivoRemessa
     {
-        public string NomeArquivo { get; private set; }
-        public Beneficiario Beneficiario { get; private set; }
-        public IEnumerable<Boleto> Boletos { get; private set; }
-        public StreamWriter Arquivo { get; private set; }
-
-        public void Gerar(Beneficiario beneficiario, IEnumerable<Boleto> boletos)
+        public void GerarArquivoRemessa(string DiretorioArquivo)
         {
+            RepositorioBoletos repositorio = new();
+            IEnumerable<Boleto> boletos = repositorio.RecuperarTodos();
+
             if (boletos == null || !boletos.Any())
             {
                 throw new ArgumentException("Nenhum boleto informado");
             }
 
-            Boletos = boletos;
-            Beneficiario = beneficiario ?? throw new ArgumentException("Beneficiário não informado");
+            Beneficiario beneficiario = repositorio.RecuperarBeneficiario();
 
-            NomeArquivo = StringExtensions.RecuperarDiretorioResouce();
-
-            if (!Directory.Exists(NomeArquivo))
+            if (beneficiario == null)
             {
-                Directory.CreateDirectory(NomeArquivo);
+                throw new ArgumentException("Beneficiário não informado");
             }
 
-            NomeArquivo += Beneficiario.Codigo.FormatarTexto(5, '0');
+            if (!Directory.Exists(DiretorioArquivo))
+            {
+                Directory.CreateDirectory(DiretorioArquivo);
+            }
+
+            string NomeArquivo = DiretorioArquivo;
+            NomeArquivo += beneficiario.Codigo.FormatarTexto(5, '0');
             NomeArquivo += StringExtensions.RecuperarCodigoDoMes(DateTime.Now.Month);
             NomeArquivo += DateTime.Now.Day + ".CRM";
 
@@ -40,9 +41,10 @@ namespace Integrador.ConsoleApp
             {
                 File.Delete(NomeArquivo);
             }
-            Arquivo = File.CreateText(NomeArquivo);
+            StreamWriter Arquivo = File.CreateText(NomeArquivo);
 
-            string strline = GerarHeader();
+
+            string strline = GerarHeader(beneficiario);
             if (string.IsNullOrWhiteSpace(strline))
             {
                 throw new Exception("Registro HEADER obrigatório.");
@@ -59,7 +61,7 @@ namespace Integrador.ConsoleApp
                 sequencia = sequencia++;
             }
 
-            strline = GerarTrailer();
+            strline = GerarTrailer(beneficiario);
             if (string.IsNullOrWhiteSpace(strline))
             {
                 throw new Exception("Registro TRAILER obrigatório.");
@@ -69,7 +71,7 @@ namespace Integrador.ConsoleApp
             Arquivo.Close();
             Arquivo.Dispose();
         }
-        public string GerarHeader()
+        public string GerarHeader(Beneficiario beneficiario)
         {
             StringBuilder build = new();                             // | Posição   | Tamanho | Descrição                            |
                                                                      // |-----------|---------|--------------------------------------|
@@ -78,12 +80,12 @@ namespace Integrador.ConsoleApp
             build.Append("REMESSA".FormatarTexto(7));                // | 003 a 009 | 007     | Literal remessa                      |
             build.Append("01".FormatarTexto(2));                     // | 010 a 011 | 002     | Código do serviço de cobrança        |
             build.Append("COBRANCA".FormatarTexto(15));              // | 012 a 026 | 015     | Literal cobrança                     |
-            build.Append(Beneficiario.Codigo.FormatarTexto(5, '0')); // | 027 a 031 | 005     | Código do beneficário                |
-            build.Append(Beneficiario.CNPJ.FormatarTexto(14, '0'));  // | 032 a 045 | 014     | CNPF do beneficário                  |
+            build.Append(beneficiario.Codigo.FormatarTexto(5, '0')); // | 027 a 031 | 005     | Código do beneficário                |
+            build.Append(beneficiario.CNPJ.FormatarTexto(14, '0'));  // | 032 a 045 | 014     | CNPF do beneficário                  |
             build.Append("".FormatarTexto(31));                      // | 046 a 076 | 031     | Filler                               |   
-            build.Append(Beneficiario.Banco.FormatarTexto(3, '0'));  // | 077 a 079 | 003     | Número do banco                      |
+            build.Append(beneficiario.Banco.FormatarTexto(3, '0'));  // | 077 a 079 | 003     | Número do banco                      |
             build.Append("EXIMIA".FormatarTexto(15));                // | 080 a 094 | 015     | BANCO                                |
-            build.Append("".FormatarTexto(15));                      // | 095 a 102 | 008     | Filer                                |
+            build.Append("".FormatarTexto(16));                      // | 095 a 110 | 016     | Filer                                |
             build.Append("1".FormatarTexto(7, '0'));                 // | 111 a 117 | 007     | Número da remessa                    |
             build.Append("".FormatarTexto(273));                     // | 118 a 390 | 273     | Filer                                |
             build.Append("2.00".FormatarTexto(4));                   // | 391 a 394 | 004     | Versão do sistema                    |
@@ -92,7 +94,7 @@ namespace Integrador.ConsoleApp
             return build.ToString();
         }
 
-        public static string GerarDetalhe(Boleto boleto, int sequencia)
+        public string GerarDetalhe(Boleto boleto, int sequencia)
         {
             StringBuilder build = new();
 
@@ -153,16 +155,16 @@ namespace Integrador.ConsoleApp
             return build.ToString();
         }
 
-        public string GerarTrailer()
+        public string GerarTrailer(Beneficiario beneficiario)
         {
             StringBuilder build = new StringBuilder();          // | Posição   | Tamanho | Descrição                            |
             build.AppendLine();                                 // |-----------|---------|--------------------------------------|
             build.Append("9".FormatarTexto(1));                 // | 001 a 001 | 001     | Identificação do registro *trailer*  |
             build.Append("1".FormatarTexto(1));                 // | 002 a 002 | 001     | Identificação do arquivo de mressa   |
-            build.Append(Beneficiario.Banco.FormatarTexto(3));  // | 003 a 005 | 003     | Numero Eximia                        |
-            build.Append(Beneficiario.Codigo.FormatarTexto(5)); // | 006 a 010 | 005     | Codigo do beneficiario               |
+            build.Append(beneficiario.Banco.FormatarTexto(3));  // | 003 a 005 | 003     | Numero Eximia                        |
+            build.Append(beneficiario.Codigo.FormatarTexto(5)); // | 006 a 010 | 005     | Codigo do beneficiario               |
             build.Append("".FormatarTexto(383));                // | 011 a 394 | 384     | Filer                                |
-            build.Append("1".FormatarTexto(6, '0'));            // | 395 a 400 | 006     | Numero sequencial do registro        |  
+            build.Append("1".FormatarTexto(5, '0'));            // | 395 a 400 | 005     | Numero sequencial do registro        |  
 
             return build.ToString();
         }
